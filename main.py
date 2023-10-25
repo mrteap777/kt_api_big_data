@@ -14,31 +14,29 @@ def time_consuming_method():
     import time
     time.sleep(2)  # Sleep for 2 seconds
 
-# Call the decorated method
+
 time_consuming_method()
 
 # Создание таблицы
-data = pd.DataFrame({'id': [1, 2, 3], 'names': ['Alice', 'Bob', 'Charlie']})
-api.create_table(data, 'users')
+data = pd.DataFrame({'id': [1, 2, 3,15,18], 'pc': ['хуперпк', 'диэнэс', 'юпитер','куплиновка','интел ньюк'],'прайс(но не капитан':[1000, 2000, 0,145,18124234]})
+api.create_table(data, 'pc')
+print(api.read_sql('SELECT * FROM pc'))
+# трукейт(очистка)
+# api.truncate_table('pc')
+print(api.read_sql('SELECT * FROM pc'))
 
-# Очистка таблицы
-# api.truncate_table('users')
+#инсерт
+new_data = pd.DataFrame({'id': [4, 5], 'pc': ['Аннна', 'Олег'],'прайс(но не капитан':[1000000,0]})
+api.insert_sql(new_data, 'pc')
 
-print(api.read_sql('SELECT * FROM users'))
+print(api.read_sql('SELECT * FROM pc'))
 
-#Запись данных в таблицу
-new_data = pd.DataFrame({'id': [4, 5], 'names': ['David', 'Eve']})
-api.insert_sql(new_data, 'users')
-
-print(api.read_sql('SELECT * FROM users'))
-
-api.delete_from_table('users', id=4, names='David')
-print(api.read_sql('SELECT * FROM users'))
-api.delete_from_table('users', names='Eve')
-print(api.read_sql('SELECT * FROM users'))
-api.delete_from_table('users')
-print(api.read_sql('SELECT * FROM users'))
-# # Выполнение произвольного SQL-запроса
+api.delete_from_table('pc', id=5)
+print(api.read_sql('SELECT * FROM pc'))
+api.delete_from_table('pc', pc='хуперпк')
+print(api.read_sql('SELECT * FROM pc'))
+api.delete_from_table('pc')
+print(api.read_sql('SELECT * FROM pc'))
 
 
 
