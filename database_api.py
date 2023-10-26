@@ -9,8 +9,18 @@ class DatabaseAPI:
     def __init__(self, host, username, password, database):
         self.engine = create_engine(f'postgresql://{username}:{password}@{host}/{database}')
 
+    @staticmethod
+    def measure_execution_time(func):
+        def wrapper(*args, **kwargs):
+            start_time = datetime.now()
+            result = func(*args, **kwargs)
+            end_time = datetime.now()
+            execution_time = end_time - start_time
+            print(f"Execution time: {execution_time}")
+            return result
 
-
+        return wrapper
+    @measure_execution_time
     def create_table(self, df, table_name):
         df.to_sql(table_name, self.engine, if_exists='replace', index=False)
 
@@ -54,14 +64,4 @@ class DatabaseAPI:
 
 
 
-    @staticmethod
-    def measure_execution_time(func):
-        def wrapper(*args, **kwargs):
-            start_time = datetime.now()
-            result = func(*args, **kwargs)
-            end_time = datetime.now()
-            execution_time = end_time - start_time
-            print(f"Execution time: {execution_time}")
-            return result
 
-        return wrapper
