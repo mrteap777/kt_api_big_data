@@ -16,7 +16,7 @@ class DatabaseAPI:
             result = func(*args, **kwargs)
             end_time = datetime.now()
             execution_time = end_time - start_time
-            print(f"Execution time: {execution_time}")
+            print(f"Время выполнения запроса: {execution_time}")
             return result
 
         return wrapper
