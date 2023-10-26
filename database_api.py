@@ -3,12 +3,18 @@ import time
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
 from datetime import datetime
+
+
 class DatabaseAPI:
     def __init__(self, host, username, password, database):
         self.engine = create_engine(f'postgresql://{username}:{password}@{host}/{database}')
 
+
+
     def create_table(self, df, table_name):
         df.to_sql(table_name, self.engine, if_exists='replace', index=False)
+
+
 
     def delete_from_table(self, table_name, **kwargs):
         if not kwargs:
@@ -23,20 +29,30 @@ class DatabaseAPI:
                 compiled = compiled.bindparams(**{key: value})
             conn.execute(compiled)
 
+
+
     def truncate_table(self, table_name):
         query = f'TRUNCATE TABLE {table_name}'
         with self.engine.begin() as conn:
             conn.execute(text(query))
 
+
+
     def read_sql(self, query):
         return pd.read_sql_query(query, self.engine)
+
+
 
     def insert_sql(self, df, table_name, if_exists='append'):
         df.to_sql(table_name, self.engine, if_exists=if_exists, index=False)
 
+
+
     def execute(self, query):
         with self.engine.begin() as conn:
             conn.execute(text(query))
+
+
 
     @staticmethod
     def measure_execution_time(func):
